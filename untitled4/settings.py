@@ -72,7 +72,7 @@ DATABASES = {
         'NAME': 'asone',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '47.94.12.16', #公网IP
+        'HOST': '172.16.14.52', #公网IP
         # 'HOST': '192.168.100.64',
         # 'HOST': '192.168.1.107',
         'PORT': '8000',
