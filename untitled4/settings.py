@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^90xj3&h7ciu6#v07jyxxu7&59c2jj7%*wp#)hwpe-rw^a)ylp'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -69,11 +69,12 @@ WSGI_APPLICATION = 'untitled4.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 或者使用 mysql.connector.django
-        'NAME': 'root',
+        'NAME': 'asone',
         'USER': 'root',
         'PASSWORD': '',
-        # 'HOST': '47.94.12.16', #公网IP
-        'HOST': '192.168.100.64',
+        'HOST': '47.94.12.16', #公网IP
+        # 'HOST': '192.168.100.64',
+        # 'HOST': '192.168.1.107',
         'PORT': '3306',
     }
 }

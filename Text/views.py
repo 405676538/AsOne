@@ -9,8 +9,8 @@ from Text.models import Test
 from operator import itemgetter, attrgetter
 
 # 文件路径配置
-filePath = "D:\\work\\python_project\\file"
-# filePath = "\\mnt\\ceph\\file"
+# filePath = "D:\\work\\python_project\\file"
+filePath = "\\mnt\\ceph\\file"
 
 
 def hello(request):
