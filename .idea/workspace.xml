@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28373364-c8ae-4f39-a760-c4f053786370" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Text/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Text/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/untitled4/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/untitled4/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mnt/ceph/file/0@1U1LU{]UFFH9X7Y9@0K`4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mnt/ceph/file/QQ图片20180529143546.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mnt/ceph/file/}_5$[P_)%AI5X@L5GL}%ZKV.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mnt/ceph/file/人物控制_攻击.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mnt/ceph/file/屏幕截图(4).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mnt/ceph/file/遮罩层.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -173,32 +176,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="AsOne" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AsOne" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AsOne" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AsOne" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AsOne" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AsOne" type="462c0819:PsiDirectoryNode" />
-              <item name="Text" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AsOne" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AsOne" type="462c0819:PsiDirectoryNode" />
-              <item name="untitled4" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -236,11 +213,38 @@
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="AsOne" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AsOne" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AsOne" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AsOne" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AsOne" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AsOne" type="462c0819:PsiDirectoryNode" />
+              <item name="Text" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AsOne" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AsOne" type="462c0819:PsiDirectoryNode" />
+              <item name="untitled4" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/venv" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -331,16 +335,15 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
-        <env name="DJANGO_SETTINGS_MODULE" value="untitled4.settings" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\Administrator\PycharmProjects\untitled4\AsOne\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="launchJavascriptDebuger" value="false" />
       <option name="port" value="8000" />
-      <option name="host" value="192.168.100.64" />
+      <option name="host" value="" />
       <option name="additionalOptions" value="" />
       <option name="browserUrl" value="" />
       <option name="runTestServer" value="false" />
@@ -405,6 +408,7 @@
       <workItem from="1552292555558" duration="1316000" />
       <workItem from="1552293894169" duration="1745000" />
       <workItem from="1552463249902" duration="239000" />
+      <workItem from="1552467216225" duration="358000" />
     </task>
     <task id="LOCAL-00001" summary="第三个">
       <created>1551855718777</created>
@@ -473,7 +477,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46486000" />
+    <option name="totallyTimeSpent" value="46844000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -486,9 +490,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27292112" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2761194" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
