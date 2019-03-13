@@ -16,7 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^90xj3&h7ciu6#v07jyxxu7&59c2jj7%*wp#)hwpe-rw^a)ylp'
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['47.94.12.16','localhost','0.0.0.0:8000','127.0.0.1']
 
 # Application definition
 # 默认已有 如果没有只要添加app名称即可 例如： 'app1'
