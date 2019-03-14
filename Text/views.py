@@ -10,6 +10,8 @@ from operator import itemgetter, attrgetter
 
 # 文件路径配置
 filePath = "D:\\work\\python_project\\file"
+
+
 # filePath = "\\mnt\\ceph\\file"
 
 
@@ -90,6 +92,11 @@ def musicCr(request):
         title = request.POST.get("title")
         musicLabel = request.POST.get("musicLabel")
         musicId = str(time.time()) + imgId
-        models.Music.objects.create(audioId=audioId, imgId=imgId, title=title, musicLabel=musicLabel, musicId=musicId)
-        return HttpResponse("add success")
+        artist = request.POST.get("artist")
+        country = request.POST.get("country")
+        upTime = time.time()
+        models.Music.objects.create(audioId=audioId, imgId=imgId, title=title, musicLabel=musicLabel, musicId=musicId,
+                                    artist=artist, country=country, upTime=upTime)
+        result = {"fileId": "creat success"}
+        return  HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
     return HttpResponse("success")

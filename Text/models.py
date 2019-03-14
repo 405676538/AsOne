@@ -30,6 +30,9 @@ class Music(models.Model):
     musicId = models.CharField(max_length=200)
     imgId = models.CharField(max_length=200)
     audioId = models.CharField(max_length=200)
-    openNum = models.IntegerField(default=0)
-    title = models.CharField(max_length=200, default="")
-    musicLabel = models.CharField(max_length=200, default="")  # 标签 用来分类
+    openNum = models.IntegerField(default=0)  # 播放量
+    title = models.CharField(max_length=200, default="") # 标题
+    musicLabel = models.CharField(max_length=200, default="") # 标签 用来分类
+    artist = models.CharField(max_length=200, default="") # 艺术家
+    country = models.CharField(max_length=200, default="") # 国家
+    upTime = models.FloatField(max_length=400, default=-1) # 上传时间

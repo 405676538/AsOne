@@ -8,6 +8,11 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
+发布线上时
+1：修改DEBUG模式
+2：修改数据库配置
+3：修改views路径
+
 """
 
 import os
@@ -15,8 +20,9 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^90xj3&h7ciu6#v07jyxxu7&59c2jj7%*wp#)hwpe-rw^a)ylp'
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['47.94.12.16', '192.168.100.64', '0.0.0.0:8000', '127.0.0.1']
+# ALLOWED_HOSTS = ['127.0.0.1','192.168.100.64']
 
 # Application definition
 # 默认已有 如果没有只要添加app名称即可 例如： 'app1'
@@ -100,9 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # 环境变量：让settings模块被包含到python可以找到的目录下，
 # 开发情况下不需要，我们通常会在当前文件夹运行，python可以搜索到
 # 。如果需要运行在其他服务器上，就必须指定DJANGO_SETTINGS_MODULE变量。
-# DJANGO_SETTING_MODULE = [
-#
-# ]
+DJANGO_SETTING_MODULE = [
+
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
