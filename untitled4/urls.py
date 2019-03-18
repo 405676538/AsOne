@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^upLoad$', views.upLoadFile),
     url(r'^music$', views.musicCr),
+    url(r'^house/album$',views.houseMusicAlbum),
+    url(r'^downLoadFile/(?P<file_name>.*)/$', views.downLoadFile),
 ]

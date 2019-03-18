@@ -3,7 +3,7 @@ import time
 
 from django.core import serializers
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, StreamingHttpResponse
 from Text import models
 from Text.models import Test
 from operator import itemgetter, attrgetter
@@ -54,27 +54,59 @@ def testdb(request):
 def upLoadFile(request):
     path = filePath
     file_obg = request.FILES.get('file')
+    fileId = getAnStr(str(time.time()) + "fileId")
     import os
     if not os.path.exists(path):
         os.makedirs(path)
     if not file_obg:
         return HttpResponse("no file uoLoad")
-    destination = open(os.path.join(path, file_obg.name), 'wb')
+    destination = open(os.path.join(path, fileId), 'wb')
     for chunk in file_obg.chunks():
         destination.write(chunk)
     destination.close()
-    fileId = str(time.time()) + "filetime" + file_obg.name
     models.UpLoadFile.objects.create(fileId=fileId)
     result = {"fileId": fileId}
     return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
 
 
-# 创建一个音乐数据
+def getAnStr(fileName):
+    if "jpg" in str(fileName):
+        return fileName + ".jpg"
+    if "png" in str(fileName):
+        return fileName + ".png"
+    if "mp3" in str(fileName):
+        return fileName + ".mp3"
+    else:
+        return fileName
+
+
+# 下载文件
+def downLoadFile(request, file_name):
+    name = file_name
+    print("下载ID=" + name)
+
+    def file_iterator(name_file, chunk_size=51200000):
+        with open(name_file, 'rb') as f:
+            if f:
+                yield f.read(chunk_size)
+                print('下载完成')
+            else:
+                print('未完成下载')
+
+    the_file_name = filePath + "\\" + name
+    print("下载路径=" + the_file_name)
+    response = StreamingHttpResponse(file_iterator(the_file_name))
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachement;filename="{0}"'.format(name)
+    return response
+
+
+# 处理音乐数据
 def musicCr(request):
     if request.method == "GET":
         musicLabels = str(request.GET.get("musicLabel"))
         print("musicLabels=" + musicLabels)
-        if musicLabels != 'None':
+        if musicLabels != 'None' and musicLabels != '':
             print("说明传了标签")
             musicList = models.Music.objects.filter(musicLabel=musicLabels)
             json_datas = serializers.serialize("json", musicList)
@@ -86,6 +118,7 @@ def musicCr(request):
             json_datas = serializers.serialize("json", musicList)
             print("json_datas get方法" + json_datas)
             return HttpResponse(json_datas, content_type="application/json")
+
     if request.method == "POST":
         audioId = request.POST.get("audioId")
         imgId = request.POST.get("imgId")
@@ -98,5 +131,20 @@ def musicCr(request):
         models.Music.objects.create(audioId=audioId, imgId=imgId, title=title, musicLabel=musicLabel, musicId=musicId,
                                     artist=artist, country=country, upTime=upTime)
         result = {"fileId": "creat success"}
-        return  HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+    return HttpResponse("success")
+
+
+def houseMusicAlbum(request):
+    if request.method == "GET":
+        musicList = models.MusicAlbum.objects.all()
+        json = serializers.serialize("json", musicList)
+        return HttpResponse(json, content_type="application/json")
+    if request.method == "POST":
+        imgUrl = request.POST.get("imgUrl")
+        musicAlbumList = request.POST.get("musicAlbumList")
+        models.MusicAlbum.objects.create(imgUrl=imgUrl, musicAlbumList=musicAlbumList)
+        result = {"msg": "creat success"}
+        data = serializers.serialize(result, content_type="application/json")
+        return HttpResponse(data, content_type="application/json")
     return HttpResponse("success")
