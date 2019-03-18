@@ -41,3 +41,12 @@ class Music(models.Model):
 class MusicAlbum(models.Model):
     imgUrl = models.CharField(max_length=200)
     musicAlbumList = models.CharField(max_length=3000)
+    title = models.CharField(default="", max_length=100)
+
+
+class ArtistList(models.Model):
+    name = models.CharField(max_length=200,default="")
+    age = models.CharField(max_length=200, default="")
+    six = models.CharField(max_length=200 ,default="")
+    brief = models.CharField(max_length=2000,default="")
+    head = models.CharField(max_length=200,default="")

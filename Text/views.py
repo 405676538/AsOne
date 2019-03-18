@@ -101,18 +101,18 @@ def downLoadFile(request, file_name):
     return response
 
 
-# 处理音乐数据
+# 处理音乐列表数据
 def musicCr(request):
     if request.method == "GET":
         musicLabels = str(request.GET.get("musicLabel"))
         print("musicLabels=" + musicLabels)
         if musicLabels != 'None' and musicLabels != '':
             print("说明传了标签")
-            musicList = models.Music.objects.filter(musicLabel=musicLabels)
+            musicList = models.Music.objects.filter(musicLabel=musicLabels).reverse()
             json_datas = serializers.serialize("json", musicList)
             return HttpResponse(json_datas, content_type="application/json")
         else:
-            musicList = models.Music.objects.all().order_by("openNum")  # 返回所有音频列表
+            musicList = models.Music.objects.all().order_by("openNum").reverse()  # 返回所有音频列表
             if musicList.count() > 100:
                 musicList = musicList[0, 100]
             json_datas = serializers.serialize("json", musicList)
@@ -135,16 +135,35 @@ def musicCr(request):
     return HttpResponse("success")
 
 
+# 创建一个首页的音乐集合
 def houseMusicAlbum(request):
     if request.method == "GET":
         musicList = models.MusicAlbum.objects.all()
-        json = serializers.serialize("json", musicList)
-        return HttpResponse(json, content_type="application/json")
+        jsonsn = serializers.serialize("json", musicList)
+        return HttpResponse(jsonsn, content_type="application/json")
     if request.method == "POST":
         imgUrl = request.POST.get("imgUrl")
+        title = request.POST.get("title")
         musicAlbumList = request.POST.get("musicAlbumList")
-        models.MusicAlbum.objects.create(imgUrl=imgUrl, musicAlbumList=musicAlbumList)
+        models.MusicAlbum.objects.create(imgUrl=imgUrl, musicAlbumList=musicAlbumList, title=title)
         result = {"msg": "creat success"}
-        data = serializers.serialize(result, content_type="application/json")
-        return HttpResponse(data, content_type="application/json")
+        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
     return HttpResponse("success")
+
+
+# 艺术家添加或获取
+def artistList(request):
+    if request.method == "GET":
+        artistAll = models.ArtistList.objects.all()
+        jsondata = serializers.serialize("json", artistAll)
+        return HttpResponse(jsondata, content_type="application/json")
+    if request.method == "POST":
+        name = request.POST.get("name")
+        age = request.POST.get("age")
+        six = request.POST.get("six")
+        brief = request.POST.get("brief")
+        head = request.POST.get("head")
+        models.ArtistList.objects.create(name=name, age=age, six=six, brief=brief, head=head)
+        result = {"msg": "creat success"}
+        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+

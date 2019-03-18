@@ -20,7 +20,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^90xj3&h7ciu6#v07jyxxu7&59c2jj7%*wp#)hwpe-rw^a)ylp'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['47.94.12.16', '192.168.100.64', '0.0.0.0:8000', '127.0.0.1']
 # ALLOWED_HOSTS = ['127.0.0.1','192.168.100.64']
 
