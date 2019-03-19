@@ -163,7 +163,23 @@ def artistList(request):
         six = request.POST.get("six")
         brief = request.POST.get("brief")
         head = request.POST.get("head")
-        models.ArtistList.objects.create(name=name, age=age, six=six, brief=brief, head=head)
+        country = request.POST.get("country")
+        recommend = request.POST.get("recommend")
+        models.ArtistList.objects.create(name=name, age=age, six=six, brief=brief, head=head, country=country,
+                                         recommend=recommend)
         result = {"msg": "creat success"}
         return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
 
+
+# 国家添加或获取
+def country(request):
+    if request.method == "GET":
+        countryAll = models.Country.objects.all()
+        jsondata = serializers.serialize("json", countryAll)
+        return HttpResponse(jsondata, content_type="application/json")
+    if request.method == "POST":
+        name = request.POST.get("name")
+        banner = request.POST.get("banner")
+        models.Country.objects.create(name=name, banner=banner)
+        result = {"msg": "creat success"}
+        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")

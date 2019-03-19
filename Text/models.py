@@ -45,8 +45,15 @@ class MusicAlbum(models.Model):
 
 
 class ArtistList(models.Model):
-    name = models.CharField(max_length=200,default="")
+    name = models.CharField(max_length=200, default="")
     age = models.CharField(max_length=200, default="")
-    six = models.CharField(max_length=200 ,default="")
-    brief = models.CharField(max_length=2000,default="")
-    head = models.CharField(max_length=200,default="")
+    six = models.CharField(max_length=200, default="")
+    brief = models.CharField(max_length=2000, default="")
+    head = models.CharField(max_length=200, default="")
+    country = models.CharField(max_length=200, default="")
+    recommend = models.CharField(max_length=200, default=-1)
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=200)
+    banner = models.CharField(max_length=200, default="")
