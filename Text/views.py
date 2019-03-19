@@ -183,3 +183,17 @@ def country(request):
         models.Country.objects.create(name=name, banner=banner)
         result = {"msg": "creat success"}
         return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+
+# 种类添加或获取
+def sound(request):
+    if request.method == "GET":
+        soundAll = models.Sound.objects.all()
+        jsondata = serializers.serialize("json", soundAll)
+        return HttpResponse(jsondata, content_type="application/json")
+    if request.method == "POST":
+        name = request.POST.get("name")
+        imgUrl = request.POST.get("imgUrl")
+        models.Sound.objects.create(name=name, imgUrl=imgUrl)
+        result = {"msg": "creat success"}
+        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+

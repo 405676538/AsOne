@@ -57,3 +57,8 @@ class ArtistList(models.Model):
 class Country(models.Model):
     name = models.CharField(max_length=200)
     banner = models.CharField(max_length=200, default="")
+
+
+class Sound(models.Model):
+    name = models.CharField(max_length=200)
+    imgUrl = models.CharField(max_length=200)

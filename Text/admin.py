@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from Text.models import Test, UserInfo, Contact, UpLoadFile, Music, MusicAlbum, ArtistList,Country
+from Text.models import Test, UserInfo, Contact, UpLoadFile, Music, MusicAlbum, ArtistList,Country,Sound
 
 
 class ContactAdmin(admin.ModelAdmin):
@@ -16,3 +16,4 @@ admin.site.register(Music)
 admin.site.register(MusicAlbum)
 admin.site.register(ArtistList)
 admin.site.register(Country)
+admin.site.register(Sound)

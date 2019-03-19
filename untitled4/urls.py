@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^downLoadFile/(?P<file_name>.*)/$', views.downLoadFile),
     url(r'^artist$', views.artistList),
     url(r'^country$', views.country),
+    url(r'^sound$', views.sound),
 
 ]

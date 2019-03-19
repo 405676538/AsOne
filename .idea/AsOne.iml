@@ -14,9 +14,12 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/venv1" />
+      <excludeFolder url="file://$MODULE_DIR$/venv36" />
+      <excludeFolder url="file://$MODULE_DIR$/venv37" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (AsOne)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.6 (venv36)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Django Lib" level="project" />
   </component>
