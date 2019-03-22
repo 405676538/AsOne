@@ -21,8 +21,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^90xj3&h7ciu6#v07jyxxu7&59c2jj7%*wp#)hwpe-rw^a)ylp'
 DEBUG = False
-# ALLOWED_HOSTS = ['47.94.12.16', '192.168.100.64', '0.0.0.0:8000', '127.0.0.1']
-ALLOWED_HOSTS = ['127.0.0.1','192.168.1.110', '0.0.0.0:8000','47.94.12.16']
+ALLOWED_HOSTS = ['47.94.12.16', '192.168.100.64', '0.0.0.0:8000', '127.0.0.1']
+# ALLOWED_HOSTS = ['127.0.0.1','192.168.1.110', '0.0.0.0:8000','47.94.12.16']
 
 # Application definition
 # 默认已有 如果没有只要添加app名称即可 例如： 'app1'
@@ -77,10 +77,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  # 或者使用 mysql.connector.django
         'NAME': 'root',
         'USER': 'root',
-        'PASSWORD': '111111',
+        'PASSWORD': '',
         # 'HOST': '47.94.12.16',  # 公网IP
-        # 'HOST': '192.168.100.64',
-        'HOST': '192.168.1.110',
+        'HOST': '192.168.100.64',
+        # 'HOST': '192.168.1.110',
         'PORT': '3306',
     }
 }

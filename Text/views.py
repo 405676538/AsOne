@@ -17,37 +17,16 @@ filePath = "D:\\work\\python_project\\file"
 
 def hello(request):
     context = {"hello": 'Hello World!'}
-    timesa = str(time.time())
     return render(request, 'hello.html', context)
 
 
 def testdb(request):
-    response1 = ""
-    # 通过objects这个模型管理器的all()获得所有数据行，相当于SQL中的SELECT * FROM
-    list = Test.objects.all()
-    # filter相当于SQL中的WHERE，可设置条件过滤结果
-    response2 = Test.objects.filter(id=1)
-    # 获取单个对象
-    response3 = Test.objects.get(id=1)
-    # 限制返回的数据 相当于 SQL 中的 OFFSET 0 LIMIT 2;
-    var = Test.objects.order_by('name')[0:2]
-    # 数据排序
-    Test.objects.order_by("id")
-    # 更新id = 1的参数值
-    # Test.objects.filter(id=1).update(name='Google')
-    # 修改所有的列
-    # Test.objects.all().update(name='Google')
-    # 上面的方法可以连锁使用
-    Test.objects.filter(name="runoob").order_by("id")
-    # 删除id=1的数据
-    # Test.objects.filter(id=1).delete()
-    # 删除所有数据
-    # Test.objects.all().delete()
-    # 输出所有数据
-    for var in list:
-        response1 += var.name + " "
-    response = response1
-    return HttpResponse("<p>" + response + "</p>")
+    return HttpResponse("<p>" + "" + "</p>")
+
+
+def suuccessResult():
+    result = {"fileId": "creat success"}
+    return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
 
 
 # 图片上传接口  字段传file  调用http://127.0.0.1:8000/upLoad
@@ -130,12 +109,15 @@ def musicCr(request):
         upTime = time.time()
         models.Music.objects.create(audioId=audioId, imgId=imgId, title=title, musicLabel=musicLabel, musicId=musicId,
                                     artist=artist, country=country, upTime=upTime)
-        result = {"fileId": "creat success"}
-        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+        return suuccessResult()
+    if request.method == "DELETE":
+        musicId = request.DELETE.get("musicId")
+        models.Music.objects.filter(musicId=musicId).delete()
+        return suuccessResult()
     return HttpResponse("success")
 
 
-# 创建一个首页的音乐集合
+# 创建一个音乐集合（现在用于首页）
 def houseMusicAlbum(request):
     if request.method == "GET":
         musicList = models.MusicAlbum.objects.all()
@@ -145,9 +127,13 @@ def houseMusicAlbum(request):
         imgUrl = request.POST.get("imgUrl")
         title = request.POST.get("title")
         musicAlbumList = request.POST.get("musicAlbumList")
-        models.MusicAlbum.objects.create(imgUrl=imgUrl, musicAlbumList=musicAlbumList, title=title)
-        result = {"msg": "creat success"}
-        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+        albumId = time.time() + "album"
+        models.MusicAlbum.objects.create(imgUrl=imgUrl, musicAlbumList=musicAlbumList, title=title, albumId=albumId)
+        return suuccessResult()
+    if request.method == "DELETE":
+        albumId = request.DELETE.get("albumId")
+        models.MusicAlbum.objects.filter(albumId=albumId).delete()
+        return suuccessResult()
     return HttpResponse("success")
 
 
@@ -165,13 +151,17 @@ def artistList(request):
         head = request.POST.get("head")
         country = request.POST.get("country")
         recommend = request.POST.get("recommend")
+        upId = time.time() + name
         models.ArtistList.objects.create(name=name, age=age, six=six, brief=brief, head=head, country=country,
-                                         recommend=recommend)
-        result = {"msg": "creat success"}
-        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+                                         recommend=recommend, upId=upId)
+        return suuccessResult()
+    if request.method == "DELETE":
+        upId = request.DELETE.get("upId")
+        models.ArtistList.objects.filter(upId=upId).delete()
+        return suuccessResult()
 
 
-# 国家添加或获取
+# 国家种类添加或获取
 def country(request):
     if request.method == "GET":
         countryAll = models.Country.objects.all()
@@ -181,10 +171,14 @@ def country(request):
         name = request.POST.get("name")
         banner = request.POST.get("banner")
         models.Country.objects.create(name=name, banner=banner)
-        result = {"msg": "creat success"}
-        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+        return suuccessResult()
+    if request.method == "DELETE":
+        name = request.DELETE.get("name")
+        models.Country.objects.filter(name=name).delete()
+        return suuccessResult()
 
-# 种类添加或获取
+
+# 声音种类添加或获取
 def sound(request):
     if request.method == "GET":
         soundAll = models.Sound.objects.all()
@@ -194,6 +188,27 @@ def sound(request):
         name = request.POST.get("name")
         imgUrl = request.POST.get("imgUrl")
         models.Sound.objects.create(name=name, imgUrl=imgUrl)
-        result = {"msg": "creat success"}
-        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json,charset=utf-8")
+        return suuccessResult()
+    if request.method == "DELETE":
+        name = request.DELETE.get("name")
+        models.Sound.objects.filter(name=name).delete()
+        return suuccessResult()
 
+
+# 用户收藏Up主的表
+def userCollectUp(request):
+    if request.method == "GET":
+        userId = str(request.GET.get("userId"))
+        soundAll = models.UserCollectUp.objects.all().filter(userId=userId)
+        jsondata = serializers.serialize("json", soundAll)
+        return HttpResponse(jsondata, content_type="application/json")
+    if request.method == "POST":
+        userId = request.POST.get("userId")
+        upId = request.POST.get("upId")
+        models.UserCollectUp.objects.create(userId=userId, upId=upId)
+        return suuccessResult()
+    if request.method == "DELETE":
+        userId = request.DELETE.get("userId")
+        upId = request.DELETE.get("upId")
+        models.UserCollectUp.objects.filter(userId=userId, upId=upId).delete()
+        return suuccessResult()

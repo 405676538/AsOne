@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^artist$', views.artistList),
     url(r'^country$', views.country),
     url(r'^sound$', views.sound),
+    url(r'^user/collect/up$', views.userCollectUp),
 
 ]

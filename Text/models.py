@@ -42,6 +42,7 @@ class MusicAlbum(models.Model):
     imgUrl = models.CharField(max_length=200)
     musicAlbumList = models.CharField(max_length=3000)
     title = models.CharField(default="", max_length=100)
+    albumId = models.CharField(max_length=200,default="")
 
 
 class ArtistList(models.Model):
@@ -52,6 +53,7 @@ class ArtistList(models.Model):
     head = models.CharField(max_length=200, default="")
     country = models.CharField(max_length=200, default="")
     recommend = models.CharField(max_length=200, default=-1)
+    upId = models.CharField(max_length=200,default="")
 
 
 class Country(models.Model):
@@ -62,3 +64,8 @@ class Country(models.Model):
 class Sound(models.Model):
     name = models.CharField(max_length=200)
     imgUrl = models.CharField(max_length=200)
+
+
+class UserCollectUp(models.Model):
+    userId = models.CharField(max_length=200)
+    upId = models.CharField(max_length=200)
