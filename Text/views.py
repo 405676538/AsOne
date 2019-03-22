@@ -212,3 +212,12 @@ def userCollectUp(request):
         upId = request.DELETE.get("upId")
         models.UserCollectUp.objects.filter(userId=userId, upId=upId).delete()
         return suuccessResult()
+
+
+def userAdd(request):
+    if request.method == "POST":
+        uid = request.POST.get("uid")
+        name = request.POST.get("name")
+        head = request.POST.get("head")
+        models.UserInfo.objects.create(uid=uid, name=name,head=head)
+        return suuccessResult()

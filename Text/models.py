@@ -6,10 +6,11 @@ class Test(models.Model):
 
 
 class UserInfo(models.Model):
-    name = models.CharField(max_length=20)
-    photo = models.CharField(max_length=20, default="")
-    pwd = models.CharField(max_length=20, default="")
-    head = models.CharField(max_length=20, default="")
+    name = models.CharField(max_length=200,default="")
+    photo = models.CharField(max_length=200, default="")
+    pwd = models.CharField(max_length=200, default="")
+    head = models.CharField(max_length=200, default="")
+    uid = models.CharField(max_length=200, default="")
 
 
 class Contact(models.Model):
