@@ -70,3 +70,9 @@ class Sound(models.Model):
 class UserCollectUp(models.Model):
     userId = models.CharField(max_length=200)
     upId = models.CharField(max_length=200)
+
+
+class Version(models.Model):
+    versionCode = models.IntegerField()
+    apkId = models.CharField(max_length=200)
+

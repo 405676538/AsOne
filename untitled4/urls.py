@@ -33,5 +33,6 @@ urlpatterns = [
     url(r'^sound$', views.sound),
     url(r'^user/collect/up$', views.userCollectUp),
     url(r'^user$', views.userAdd),
+    url(r'^version', views.version),
 
 ]

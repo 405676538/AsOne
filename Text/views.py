@@ -3,7 +3,7 @@ import time
 
 from django.core import serializers
 from django.shortcuts import render
-from django.http import HttpResponse, StreamingHttpResponse
+from django.http import HttpResponse, StreamingHttpResponse, JsonResponse
 from Text import models
 from Text.models import Test
 from operator import itemgetter, attrgetter
@@ -137,12 +137,17 @@ def houseMusicAlbum(request):
     return HttpResponse("success")
 
 
+
+
 # 艺术家添加或获取
 def artistList(request):
     if request.method == "GET":
+        response = {}
         artistAll = models.ArtistList.objects.all()
-        jsondata = serializers.serialize("json", artistAll)
-        return HttpResponse(jsondata, content_type="application/json")
+        collectList = models.UserCollectUp.objects.all()
+        response["artistAll"] = json.loads(serializers.serialize("json",artistAll))
+        response["collectList"] = json.loads(serializers.serialize("json",collectList))
+        return JsonResponse(response)
     if request.method == "POST":
         name = request.POST.get("name")
         age = request.POST.get("age")
@@ -151,7 +156,7 @@ def artistList(request):
         head = request.POST.get("head")
         country = request.POST.get("country")
         recommend = request.POST.get("recommend")
-        upId = time.time() + name
+        upId = str(time.time())
         models.ArtistList.objects.create(name=name, age=age, six=six, brief=brief, head=head, country=country,
                                          recommend=recommend, upId=upId)
         return suuccessResult()
@@ -208,8 +213,9 @@ def userCollectUp(request):
         models.UserCollectUp.objects.create(userId=userId, upId=upId)
         return suuccessResult()
     if request.method == "DELETE":
-        userId = request.DELETE.get("userId")
-        upId = request.DELETE.get("upId")
+        userId = request.GET.get("userId")
+        upId = request.GET.get("upId")
+        print(userId)
         models.UserCollectUp.objects.filter(userId=userId, upId=upId).delete()
         return suuccessResult()
 
@@ -220,4 +226,18 @@ def userAdd(request):
         name = request.POST.get("name")
         head = request.POST.get("head")
         models.UserInfo.objects.create(uid=uid, name=name,head=head)
+        return suuccessResult()
+
+def version(request):
+    if request.method == "GET":
+        if(models.Version.objects.all().count() <= 0):
+           return HttpResponse("json",models.Version.objects.all())
+        else:
+            versionAll = models.Version.objects.order_by("versionCode")
+            jsondata = serializers.serialize("json", versionAll)
+        return HttpResponse(jsondata, content_type="application/json")
+    if request.method == "POST":
+        versionCode = request.POST.get("versionCode")
+        apkId = request.POST.get("apkId")
+        models.Version.objects.create(versionCode=versionCode,apkId=apkId)
         return suuccessResult()
