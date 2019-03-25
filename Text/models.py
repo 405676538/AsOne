@@ -6,11 +6,12 @@ class Test(models.Model):
 
 
 class UserInfo(models.Model):
-    name = models.CharField(max_length=200,default="")
+    name = models.CharField(max_length=200, default="")
     photo = models.CharField(max_length=200, default="")
     pwd = models.CharField(max_length=200, default="")
     head = models.CharField(max_length=200, default="")
     uid = models.CharField(max_length=200, default="")
+    artist = models.ManyToManyField('ArtistList')
 
 
 class Contact(models.Model):
@@ -43,7 +44,7 @@ class MusicAlbum(models.Model):
     imgUrl = models.CharField(max_length=200)
     musicAlbumList = models.CharField(max_length=3000)
     title = models.CharField(default="", max_length=100)
-    albumId = models.CharField(max_length=200,default="")
+    albumId = models.CharField(max_length=200, default="")
 
 
 class ArtistList(models.Model):
@@ -54,7 +55,7 @@ class ArtistList(models.Model):
     head = models.CharField(max_length=200, default="")
     country = models.CharField(max_length=200, default="")
     recommend = models.CharField(max_length=200, default=-1)
-    upId = models.CharField(max_length=200,default="")
+    upId = models.CharField(max_length=200, default="")
 
 
 class Country(models.Model):
@@ -75,4 +76,3 @@ class UserCollectUp(models.Model):
 class Version(models.Model):
     versionCode = models.IntegerField()
     apkId = models.CharField(max_length=200)
-

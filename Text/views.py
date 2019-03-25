@@ -137,16 +137,41 @@ def houseMusicAlbum(request):
     return HttpResponse("success")
 
 
-
-
-# 艺术家添加或获取
+# 艺术家添加或获取  type:约定 【0:不过滤 1:name 2：age 3：six 4：country 5：recommend 6：收藏列表】
 def artistList(request):
     if request.method == "GET":
         response = {}
-        artistAll = models.ArtistList.objects.all()
-        collectList = models.UserCollectUp.objects.all()
-        response["artistAll"] = json.loads(serializers.serialize("json",artistAll))
-        response["collectList"] = json.loads(serializers.serialize("json",collectList))
+        artType = int(request.GET.get("type"))
+        typeContent = str(request.GET.get("typeContent"))
+        userId = str(request.GET.get("userId"))
+        print("type=" + str(artType))
+        print("typeContent="+typeContent)
+        print("userId="+userId)
+        if artType == 0:
+            print("0")
+            artistAll = models.ArtistList.objects.all()
+        if artType == 1:
+            print("1")
+            artistAll = models.ArtistList.objects.all().filter(name=typeContent)
+        if artType == 2:
+            print("2")
+            artistAll = models.ArtistList.objects.all().filter(age=typeContent)
+        if artType == 3:
+            print("3")
+            artistAll = models.ArtistList.objects.all().filter(six=typeContent)
+        if artType == 4:
+            print("4")
+            artistAll = models.ArtistList.objects.all().filter(country=typeContent)
+        if artType == 5:
+            print("5")
+            artistAll = models.ArtistList.objects.all().filter(recommend=typeContent)
+        # if artType == 6:
+        #     print("6")
+        #     artistAll = models.UserCollectUp.objects.get(userId=userId).artistlist_set.all()
+        else:
+            print("else")
+            artistAll = models.ArtistList.objects.all()
+        response["artistAll"] = json.loads(serializers.serialize("json", artistAll))
         return JsonResponse(response)
     if request.method == "POST":
         name = request.POST.get("name")
@@ -225,13 +250,14 @@ def userAdd(request):
         uid = request.POST.get("uid")
         name = request.POST.get("name")
         head = request.POST.get("head")
-        models.UserInfo.objects.create(uid=uid, name=name,head=head)
+        models.UserInfo.objects.create(uid=uid, name=name, head=head)
         return suuccessResult()
+
 
 def version(request):
     if request.method == "GET":
-        if(models.Version.objects.all().count() <= 0):
-           return HttpResponse("json",models.Version.objects.all())
+        if (models.Version.objects.all().count() <= 0):
+            return HttpResponse("json", models.Version.objects.all())
         else:
             versionAll = models.Version.objects.order_by("versionCode")
             jsondata = serializers.serialize("json", versionAll)
@@ -239,5 +265,5 @@ def version(request):
     if request.method == "POST":
         versionCode = request.POST.get("versionCode")
         apkId = request.POST.get("apkId")
-        models.Version.objects.create(versionCode=versionCode,apkId=apkId)
+        models.Version.objects.create(versionCode=versionCode, apkId=apkId)
         return suuccessResult()
