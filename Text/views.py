@@ -80,24 +80,25 @@ def downLoadFile(request, file_name):
     return response
 
 
-# 处理音乐列表数据
+# 处理音乐列表数据 0:全部 1：openNum  2:musicLabel 3:artist  4:upTime
 def musicCr(request):
     if request.method == "GET":
-        musicLabels = str(request.GET.get("musicLabel"))
-        print("musicLabels=" + musicLabels)
-        if musicLabels != 'None' and musicLabels != '':
-            print("说明传了标签")
-            musicList = models.Music.objects.filter(musicLabel=musicLabels).reverse()
-            json_datas = serializers.serialize("json", musicList)
-            return HttpResponse(json_datas, content_type="application/json")
+        artType = int(request.GET.get("type"))
+        quary = str(request.GET.get("content"))
+        if artType == 0:
+            musicList = models.Music.objects.all().order_by("openNum").reverse()
+        elif artType == 1:
+            musicList = models.Music.objects.filter(openNum=quary)
+        elif artType == 2:
+            musicList = models.Music.objects.filter(musicLabel=quary)
+        elif artType == 3:
+            musicList = models.Music.objects.filter(artist=quary)
+        elif artType == 4:
+            musicList = models.Music.objects.all().order_by("upTime").reverse()
         else:
-            musicList = models.Music.objects.all().order_by("openNum").reverse()  # 返回所有音频列表
-            if musicList.count() > 100:
-                musicList = musicList[0, 100]
-            json_datas = serializers.serialize("json", musicList)
-            print("json_datas get方法" + json_datas)
-            return HttpResponse(json_datas, content_type="application/json")
-
+            musicList = models.Music.objects.all()
+        json_datas = serializers.serialize("json", musicList)
+        return HttpResponse(json_datas, content_type="application/json")
     if request.method == "POST":
         audioId = request.POST.get("audioId")
         imgId = request.POST.get("imgId")
@@ -140,39 +141,38 @@ def houseMusicAlbum(request):
 # 艺术家添加或获取  type:约定 【0:不过滤 1:name 2：age 3：six 4：country 5：recommend 6：收藏列表】
 def artistList(request):
     if request.method == "GET":
-        response = {}
         artType = int(request.GET.get("type"))
         typeContent = str(request.GET.get("typeContent"))
         userId = str(request.GET.get("userId"))
         print("type=" + str(artType))
-        print("typeContent="+typeContent)
-        print("userId="+userId)
+        print("typeContent=" + typeContent)
+        print("userId=" + userId)
         if artType == 0:
             print("0")
             artistAll = models.ArtistList.objects.all()
-        if artType == 1:
+        elif artType == 1:
             print("1")
             artistAll = models.ArtistList.objects.all().filter(name=typeContent)
-        if artType == 2:
+        elif artType == 2:
             print("2")
             artistAll = models.ArtistList.objects.all().filter(age=typeContent)
-        if artType == 3:
+        elif artType == 3:
             print("3")
             artistAll = models.ArtistList.objects.all().filter(six=typeContent)
-        if artType == 4:
+        elif artType == 4:
             print("4")
             artistAll = models.ArtistList.objects.all().filter(country=typeContent)
-        if artType == 5:
+        elif artType == 5:
             print("5")
             artistAll = models.ArtistList.objects.all().filter(recommend=typeContent)
-        # if artType == 6:
-        #     print("6")
-        #     artistAll = models.UserCollectUp.objects.get(userId=userId).artistlist_set.all()
+        elif artType == 6:
+            print("6")
+            artistAll = models.UserInfo.objects.get(uid=userId).artistlist_set.all()
         else:
             print("else")
             artistAll = models.ArtistList.objects.all()
-        response["artistAll"] = json.loads(serializers.serialize("json", artistAll))
-        return JsonResponse(response)
+        jsonsn = serializers.serialize("json", artistAll)
+        return HttpResponse(jsonsn, content_type="application/json")
     if request.method == "POST":
         name = request.POST.get("name")
         age = request.POST.get("age")
@@ -227,21 +227,19 @@ def sound(request):
 
 # 用户收藏Up主的表
 def userCollectUp(request):
-    if request.method == "GET":
-        userId = str(request.GET.get("userId"))
-        soundAll = models.UserCollectUp.objects.all().filter(userId=userId)
-        jsondata = serializers.serialize("json", soundAll)
-        return HttpResponse(jsondata, content_type="application/json")
     if request.method == "POST":
         userId = request.POST.get("userId")
         upId = request.POST.get("upId")
-        models.UserCollectUp.objects.create(userId=userId, upId=upId)
+        user = models.UserInfo.objects.get(uid=userId)
+        artist = models.ArtistList.objects.get(upId=upId)
+        artist.userInfos.add(user)
         return suuccessResult()
     if request.method == "DELETE":
         userId = request.GET.get("userId")
         upId = request.GET.get("upId")
-        print(userId)
-        models.UserCollectUp.objects.filter(userId=userId, upId=upId).delete()
+        user = models.UserInfo.objects.get(uid=userId)
+        artist = models.ArtistList.objects.get(upId=upId)
+        artist.userInfos.remove(user)
         return suuccessResult()
 
 
@@ -250,7 +248,10 @@ def userAdd(request):
         uid = request.POST.get("uid")
         name = request.POST.get("name")
         head = request.POST.get("head")
-        models.UserInfo.objects.create(uid=uid, name=name, head=head)
+        try:
+            models.UserInfo.objects.get(uid=uid)
+        except:
+            models.UserInfo.objects.create(uid=uid, name=name, head=head)
         return suuccessResult()
 
 

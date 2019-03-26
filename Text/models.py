@@ -6,12 +6,12 @@ class Test(models.Model):
 
 
 class UserInfo(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200, default="")
     photo = models.CharField(max_length=200, default="")
     pwd = models.CharField(max_length=200, default="")
     head = models.CharField(max_length=200, default="")
     uid = models.CharField(max_length=200, default="")
-    artist = models.ManyToManyField('ArtistList')
 
 
 class Contact(models.Model):
@@ -29,6 +29,7 @@ class UpLoadFile(models.Model):
 
 
 class Music(models.Model):
+    id = models.AutoField(primary_key=True)
     musicId = models.CharField(max_length=200)
     imgId = models.CharField(max_length=200)
     audioId = models.CharField(max_length=200)
@@ -41,6 +42,7 @@ class Music(models.Model):
 
 
 class MusicAlbum(models.Model):
+    id = models.AutoField(primary_key=True)
     imgUrl = models.CharField(max_length=200)
     musicAlbumList = models.CharField(max_length=3000)
     title = models.CharField(default="", max_length=100)
@@ -48,6 +50,7 @@ class MusicAlbum(models.Model):
 
 
 class ArtistList(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200, default="")
     age = models.CharField(max_length=200, default="")
     six = models.CharField(max_length=200, default="")
@@ -56,21 +59,19 @@ class ArtistList(models.Model):
     country = models.CharField(max_length=200, default="")
     recommend = models.CharField(max_length=200, default=-1)
     upId = models.CharField(max_length=200, default="")
+    userInfos = models.ManyToManyField(UserInfo)
 
 
 class Country(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     banner = models.CharField(max_length=200, default="")
 
 
 class Sound(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     imgUrl = models.CharField(max_length=200)
-
-
-class UserCollectUp(models.Model):
-    userId = models.CharField(max_length=200)
-    upId = models.CharField(max_length=200)
 
 
 class Version(models.Model):
