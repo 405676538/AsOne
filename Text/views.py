@@ -128,14 +128,28 @@ def houseMusicAlbum(request):
         imgUrl = request.POST.get("imgUrl")
         title = request.POST.get("title")
         musicAlbumList = request.POST.get("musicAlbumList")
-        albumId = time.time() + "album"
-        models.MusicAlbum.objects.create(imgUrl=imgUrl, musicAlbumList=musicAlbumList, title=title, albumId=albumId)
+        albumId = str(time.time()) + "album"
+        album = models.MusicAlbum.objects.create(imgUrl=imgUrl, musicAlbumList=musicAlbumList, title=title, albumId=albumId)
+        list = str(musicAlbumList).split('~')
+        for musicId in list:
+            print("musicId=="+musicId)
+            music = models.Music.objects.get(musicId=musicId)
+            album.music_set.add(music)
         return suuccessResult()
     if request.method == "DELETE":
         albumId = request.DELETE.get("albumId")
         models.MusicAlbum.objects.filter(albumId=albumId).delete()
         return suuccessResult()
     return HttpResponse("success")
+
+
+def musicAlbumDetail(request):
+    if request.method == "GET":
+        id = request.GET.get("albumId")
+        musicAlbum = models.MusicAlbum.objects.get(albumId=id)
+        list = musicAlbum.music_set.all()
+        jsonsn = serializers.serialize("json", list)
+        return HttpResponse(jsonsn, content_type="application/json")
 
 
 # 艺术家添加或获取  type:约定 【0:不过滤 1:name 2：age 3：six 4：country 5：recommend 6：收藏列表】

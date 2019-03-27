@@ -39,6 +39,7 @@ class Music(models.Model):
     artist = models.CharField(max_length=200, default="")  # 艺术家
     country = models.CharField(max_length=200, default="")  # 国家
     upTime = models.FloatField(max_length=400, default=-1)  # 上传时间
+    musicAlbum = models.ManyToManyField('MusicAlbum')
 
 
 class MusicAlbum(models.Model):

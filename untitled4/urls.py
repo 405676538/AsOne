@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^upLoad$', views.upLoadFile),
     url(r'^music$', views.musicCr),
     url(r'^house/album$',views.houseMusicAlbum),
+    url(r'^house/album/detail$', views.musicAlbumDetail),
     url(r'^downLoadFile/(?P<file_name>.*)/$', views.downLoadFile),
     url(r'^artist$', views.artistList),
     url(r'^country$', views.country),
