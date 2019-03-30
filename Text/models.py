@@ -48,6 +48,7 @@ class MusicAlbum(models.Model):
     musicAlbumList = models.CharField(max_length=3000)
     title = models.CharField(default="", max_length=100)
     albumId = models.CharField(max_length=200, default="")
+    hotNum = models.IntegerField(default=0)
 
 
 class ArtistList(models.Model):
@@ -61,6 +62,7 @@ class ArtistList(models.Model):
     recommend = models.CharField(max_length=200, default=-1)
     upId = models.CharField(max_length=200, default="")
     userInfos = models.ManyToManyField(UserInfo)
+    hotNum = models.IntegerField(default=0)
 
 
 class Country(models.Model):

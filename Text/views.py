@@ -86,17 +86,17 @@ def musicCr(request):
         artType = int(request.GET.get("type"))
         quary = str(request.GET.get("content"))
         if artType == 0:
-            musicList = models.Music.objects.all().order_by("openNum").reverse()
+            musicList = models.Music.objects.all().order_by("openNum").order_by('-id')
         elif artType == 1:
-            musicList = models.Music.objects.filter(openNum=quary)
+            musicList = models.Music.objects.filter(openNum=quary).order_by('-id')
         elif artType == 2:
-            musicList = models.Music.objects.filter(musicLabel=quary)
+            musicList = models.Music.objects.filter(musicLabel=quary).order_by('-id')
         elif artType == 3:
-            musicList = models.Music.objects.filter(artist=quary)
+            musicList = models.Music.objects.filter(artist=quary).order_by('-id')
         elif artType == 4:
-            musicList = models.Music.objects.all().order_by("upTime").reverse()
+            musicList = models.Music.objects.all().order_by("upTime").order_by('-id')
         else:
-            musicList = models.Music.objects.all()
+            musicList = models.Music.objects.all().order_by('-id')
         json_datas = serializers.serialize("json", musicList)
         return HttpResponse(json_datas, content_type="application/json")
     if request.method == "POST":
@@ -118,10 +118,14 @@ def musicCr(request):
     return HttpResponse("success")
 
 
-# 创建一个音乐集合（现在用于首页）
+# 创建一个音乐集合（现在用于首页） type = 0 根据热门度排序
 def houseMusicAlbum(request):
     if request.method == "GET":
-        musicList = models.MusicAlbum.objects.all()
+        artType = int(request.GET.get("type"))
+        if artType == 1:
+            musicList = models.MusicAlbum.objects.all().order_by('-hotNum')
+        else:
+            musicList = models.MusicAlbum.objects.all().order_by('-id')
         jsonsn = serializers.serialize("json", musicList)
         return HttpResponse(jsonsn, content_type="application/json")
     if request.method == "POST":
@@ -135,6 +139,11 @@ def houseMusicAlbum(request):
             print("musicId=="+musicId)
             music = models.Music.objects.get(musicId=musicId)
             album.music_set.add(music)
+        return suuccessResult()
+    if request.method == "PUT":
+        hotNum = request.GET.get("hotNum")
+        albumId = request.GET.get("albumId")
+        models.MusicAlbum.objects.filter(albumId=albumId).update(hotNum=hotNum)
         return suuccessResult()
     if request.method == "DELETE":
         albumId = request.DELETE.get("albumId")
@@ -152,7 +161,7 @@ def musicAlbumDetail(request):
         return HttpResponse(jsonsn, content_type="application/json")
 
 
-# 艺术家添加或获取  type:约定 【0:不过滤 1:name 2：age 3：six 4：country 5：recommend 6：收藏列表】
+# 艺术家添加或获取  type:约定 【0:不过滤 1:name 2：age 3：six 4：country 5：recommend 6：收藏列表 7:hot排序】
 def artistList(request):
     if request.method == "GET":
         artType = int(request.GET.get("type"))
@@ -162,28 +171,22 @@ def artistList(request):
         print("typeContent=" + typeContent)
         print("userId=" + userId)
         if artType == 0:
-            print("0")
-            artistAll = models.ArtistList.objects.all()
+            artistAll = models.ArtistList.objects.all().order_by('-id')
         elif artType == 1:
-            print("1")
             artistAll = models.ArtistList.objects.all().filter(name=typeContent)
         elif artType == 2:
-            print("2")
             artistAll = models.ArtistList.objects.all().filter(age=typeContent)
         elif artType == 3:
-            print("3")
             artistAll = models.ArtistList.objects.all().filter(six=typeContent)
         elif artType == 4:
-            print("4")
             artistAll = models.ArtistList.objects.all().filter(country=typeContent)
         elif artType == 5:
-            print("5")
-            artistAll = models.ArtistList.objects.all().filter(recommend=typeContent)
+            artistAll = models.ArtistList.objects.all().filter(recommend=typeContent).order_by('-id')
         elif artType == 6:
-            print("6")
-            artistAll = models.UserInfo.objects.get(uid=userId).artistlist_set.all()
+            artistAll = models.UserInfo.objects.get(uid=userId).artistlist_set.all().order_by('-id')
+        elif artType == 7:
+            artistAll = models.ArtistList.objects.all().order_by('-id').order_by('-hotNum')
         else:
-            print("else")
             artistAll = models.ArtistList.objects.all()
         jsonsn = serializers.serialize("json", artistAll)
         return HttpResponse(jsonsn, content_type="application/json")
@@ -199,8 +202,13 @@ def artistList(request):
         models.ArtistList.objects.create(name=name, age=age, six=six, brief=brief, head=head, country=country,
                                          recommend=recommend, upId=upId)
         return suuccessResult()
+    if request.method == "PUT":
+        hotNum = request.GET.get("hotNum")
+        upId = request.GET.get("upId")
+        models.ArtistList.objects.filter(upId=upId).update(hotNum=hotNum)
+        return suuccessResult()
     if request.method == "DELETE":
-        upId = request.DELETE.get("upId")
+        upId = request.GET.get("upId")
         models.ArtistList.objects.filter(upId=upId).delete()
         return suuccessResult()
 
