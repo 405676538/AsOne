@@ -9,10 +9,10 @@ from Text.models import Test
 from operator import itemgetter, attrgetter
 
 # 文件路径配置
-filePath = "D:\\work\\python_project\\file"
+# filePath = "D:\\work\\python_project\\file"
 
 
-# filePath = "\\mnt\\ceph\\file"
+filePath = "\\home\\file"
 
 
 def hello(request):
@@ -72,7 +72,8 @@ def downLoadFile(request, file_name):
             else:
                 print('未完成下载')
 
-    the_file_name = filePath + "\\" + name
+    import os
+    the_file_name = os.path.join(filePath,name)
     print("下载路径=" + the_file_name)
     response = StreamingHttpResponse(file_iterator(the_file_name))
     response['Content-Type'] = 'application/octet-stream'
