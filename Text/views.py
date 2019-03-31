@@ -12,7 +12,7 @@ from operator import itemgetter, attrgetter
 # filePath = "D:\\work\\python_project\\file"
 
 
-filePath = "\\home\\file"
+filePath = "file"
 
 
 def hello(request):
