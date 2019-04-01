@@ -64,7 +64,7 @@ def downLoadFile(request, file_name):
     name = file_name
     print("下载ID=" + name)
 
-    def file_iterator(name_file, chunk_size=51200000):
+    def file_iterator(name_file, chunk_size=512000000):
         with open(name_file, 'rb') as f:
             if f:
                 yield f.read(chunk_size)
