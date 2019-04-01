@@ -31,7 +31,7 @@ class UpLoadFile(models.Model):
 class Music(models.Model):
     id = models.AutoField(primary_key=True)
     musicId = models.CharField(max_length=200)
-    imgId = models.CharField(max_length=200)
+    imgId = models.CharField(max_length=200,default='')
     audioId = models.CharField(max_length=200)
     openNum = models.IntegerField(default=0)  # 播放量
     title = models.CharField(max_length=200, default="")  # 标题
